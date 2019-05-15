@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.projectmange.Mapper.ProjectListMapper" >
+
+
+    <select id="showallprojectlist" resultType="com.projectmange.Entity.ProjectList">
+        select * from ProjectList
+    </select>
+    <insert id="projectapply" parameterType="com.projectmange.Entity.ProjectList">
+       insert into ProjectList (projectname, examinestate, begintime, nowstate, applicationuri, reporturilist, costlistid, costinvoicestate, projectdes, applyuserid) VALUES (#{projectname},#{examinestate},#{begintime},#{nowstate},#{applicationuri},#{reporturilist},#{costlistid},#{costinvoicestate},#{projectdes},#{applyuserid})
+    </insert>
+
+    <update id="checkovertostartthisproject" parameterType="int">
+        update ProjectList set examinestate="已审核",nowstate="立项成功"where projectid=#{value}
+    </update>
+
+    <select id="showmyprojectlist" parameterType="string" resultType="com.projectmange.Entity.ProjectList">
+        select * from ProjectList where applyuserid=#{studentid}
+    </select>
+</mapper>

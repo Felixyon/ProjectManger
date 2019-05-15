@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    <!-- 静态资源访问 -->
+    <mvc:resources location="/" mapping="/**" />
+    <!--配置监听本地的controller-->
+    <context:annotation-config />
+    <context:component-scan base-package="com.projectmange">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+    </context:component-scan>
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>text/html;charset=UTF-8</value>
+                        <value>application/json;charset=UTF-8</value>
+                        <value>*/*;charset=UTF-8</value>
+                    </list>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+    <context:annotation-config />
+    <context:component-scan base-package="com.projectmange.Service"/>
+    <!--监听本地controller结束-->
+    <!-- 避免IE在ajax请求时，返回json出现下载 -->
+    <bean id="mappingJacksonHttpMessageConverter"
+          class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+        <property name="supportedMediaTypes">
+            <list>
+                <value>text/html;charset=UTF-8</value>
+            </list>
+        </property>
+    </bean>
+
+    <!--Mybatis配置开始-->
+    <!--加载配置文件:加载mybatis关与数据库连接的基础配置文件-->
+    <context:property-placeholder location="classpath:db.properties"/>
+    <!--数据源，使用dbcp,datasource-->
+    <!--使用destory-method方法，选择close自动销毁资源，避免资源浪费-->
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="maxOpenPreparedStatements" value="20"/>
+        <property name="maxIdle" value="5"/>
+    </bean>
+
+    <!--创建mybatis的上下文对象-->
+    <bean class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource">
+            <ref bean="dataSource"/>
+        </property>
+        <property name="configLocation">
+            <value>classpath:mybatis-config.xml</value>
+        </property>
+    </bean>
+
+    <!-- 扫描mybatis的接口与映射配置文件 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.projectmange.Mapper"/>
+    </bean>
+
+
+
+</beans>

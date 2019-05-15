@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.projectmange.Mapper.UserMapper">
+
+
+    <select id="selectUserAll" resultType="com.projectmange.Entity.User">
+        select * from UserList
+    </select>
+    <insert id="insertnewuser" parameterType="com.projectmange.Entity.User">
+        insert into UserList (UserName, StudentId, PhotoUri, Grade, classnumber, Role, PhoneNumber, Expid, WorkingGroup, EmailAdress, password, workgrouplist) VALUES (#{username},#{studentid},#{photouri},#{grade},#{classnumber},#{role},#{phonenumber},#{expid},#{workinggruop},#{emailadress},#{password},#{workgrouplist});
+    </insert>
+    <select id="login" parameterType="string" resultType="com.projectmange.Entity.User">
+        select username,password from UserList where StudentId=#{value}
+    </select>
+    <update id="updateworkgroupinfo">
+        update UserList set WorkingGroup=#{workgroup} where StudentId=#{studentid}
+    </update>
+    <select id="getonesusername" parameterType="string" resultType="com.projectmange.Entity.User">
+        select UserName from UserList where StudentId=#{studentid}
+    </select>
+
+    <select id="getoneuser" parameterType="string" resultType="com.projectmange.Entity.User">
+        select UserId, UserName, StudentId, PhotoUri, Grade, classnumber, Role, PhoneNumber, Expid, WorkingGroup, EmailAdress,workgrouplist from UserList where StudentId=#{studentid}
+    </select>
+
+</mapper>

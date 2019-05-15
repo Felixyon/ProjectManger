@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.projectmange.Mapper.WorkgroupMapper" >
+
+
+    <select id="showoneselectworkgroup" parameterType="int" resultType="com.projectmange.Entity.Workgroup">
+        select * from WorkGroup${value}
+    </select>
+
+    <update id="createworkgroup" parameterType="string">
+        CREATE TABLE WorkGroup${value}
+(
+    Userid varchar(20) PRIMARY KEY,
+    Role varchar(20),
+    JobRole varchar(20),
+    Username varchar(100),
+    workflowid varchar(20)
+);
+    </update>
+
+    <insert id="insertoneworker" parameterType="com.projectmange.Entity.Workgroup">
+        insert into WorkGroup${tableid} (Userid, Role, JobRole, Username, workflowid) values (#{userid},#{role},#{jobrole},#{username},#{workflowid})
+    </insert>
+
+    <update id="updateunsure" parameterType="string">
+        update WorkGroup${workgroupid} set Role="regular" where Userid=#{studentid}
+    </update>
+
+</mapper>

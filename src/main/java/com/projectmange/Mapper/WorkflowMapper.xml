@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.projectmange.Mapper.WorkflowMapper" >
+
+
+    <select id="showoneselectedworkflow" parameterType="string" resultType="com.projectmange.Entity.Workflow">
+        select * from #{tablename}
+    </select>
+    <update id="creteworkflowtable" parameterType="string">
+        CREATE TABLE ${tablename}
+(
+    id varchar(20) PRIMARY KEY,
+    content text,
+    state varchar(10),
+    begintime varchar(16),
+    purposetime varchar(16)
+)
+    </update>
+</mapper>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.projectmange.Mapper.WorkgroupListMapper" >
+
+
+    <select id="showallworkgrouplist" resultType="com.projectmange.Entity.Workgruoplist">
+        select * from WorkGroupList
+    </select>
+    <insert id="insertintoworkgrouplist" parameterType="com.projectmange.Entity.Workgruoplist">
+        insert into WorkGroupList (timestate, begintime, workforproject, nowstate, commentlistid, information, leaderid) VALUES (#{timestate},#{begintime},#{workforproject},#{nowstate},#{commentlistid},#{information},#{leaderid})
+    </insert>
+    <select id="getoneuniqueworkgrouplistByProjectid" parameterType="string" resultType="com.projectmange.Entity.Workgruoplist">
+        select * from WorkGroupList where workforproject=#{projectid}
+    </select>
+</mapper>

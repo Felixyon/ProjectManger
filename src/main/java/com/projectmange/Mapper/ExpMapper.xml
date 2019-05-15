@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.projectmange.Mapper.ExpMapper" >
+
+
+    <select id="showoneselectexpinfo" parameterType="int" resultType="com.projectmange.Entity.Exp">
+        select * from Exp${value}
+    </select>
+    <update id="createexp" parameterType="java.math.BigInteger">
+        CREATE TABLE Exp${value}
+(
+    expnumberid int PRIMARY KEY AUTO_INCREMENT,
+    begintime varchar(16),
+    endtime varchar(16),
+    expname text,
+    expcontent text,
+    evaluation text
+)
+    </update>
+</mapper>

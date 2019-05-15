@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.projectmange.Mapper.UserinfoListMapper" >
+
+
+    <select id="showunreaduserinfo" parameterType="string" resultType="com.projectmange.Entity.UserinfoList">
+        select * from Userinfolist${value} where read!=0;
+    </select>
+    <update id="updateoneread" parameterType="com.projectmange.Entity.Cursor">
+        update Userinfolist${value} set read=0 where id=#{id}
+    </update>
+    <update id="createtable" parameterType="string">
+        CREATE TABLE Userinfolist${value}
+(
+    id int PRIMARY KEY AUTO_INCREMENT,
+    infocontent text,
+    `read` int DEFAULT 1
+);
+    </update>
+    <insert id="inseronepice">
+        insert into Userinfolist${piecename} (infocontent) VALUES (#{infocontent})
+    </insert>
+</mapper>
